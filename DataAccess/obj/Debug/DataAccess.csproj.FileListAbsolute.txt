@@ -1,0 +1,14 @@
+C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataAccess.dll.config
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataAccess.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataAccess.pdb
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataModel.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataModel.pdb
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\DataModel.dll.config
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.xml
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.pdb

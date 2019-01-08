@@ -1,0 +1,11 @@
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\DataModel.dll.config
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\DataModel.dll
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\DataModel.pdb
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\EntityFramework.dll
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\EntityFramework.xml
+C:\Users\Egor\source\repos\VetClinic\DataModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Egor\source\repos\VetClinic\DataModel\obj\Debug\DataModel.csproj.CoreCompileInputs.cache
+C:\Users\Egor\source\repos\VetClinic\DataModel\obj\Debug\DataModel.dll
+C:\Users\Egor\source\repos\VetClinic\DataModel\obj\Debug\DataModel.pdb
+C:\Users\Egor\source\repos\VetClinic\DataModel\obj\Debug\DataModel.csprojResolveAssemblyReference.cache
