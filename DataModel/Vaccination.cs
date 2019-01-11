@@ -16,8 +16,8 @@ namespace DataModel
         public Pet Pet { get; set; }
 
         public string VaccineName { get; set; }
-        public DateTime DateOfVaccination { get; set; }
-        public DateTime ExpiredDate { get; set; }
+        public string DateOfVaccination { get; set; }
+        public string ExpiredDate { get; set; }
 
         public bool IsVaccinated { get; set; }
         public string Description { get; set; }

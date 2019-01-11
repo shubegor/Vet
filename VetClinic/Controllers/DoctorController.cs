@@ -24,6 +24,15 @@ namespace VetClinic.Controllers
         }
 
         [Authorize]
+        [Route("GetMyName")]
+        [HttpGet]
+        public string GetMyName()
+        {
+            return User.Identity.Name + " (" + UserRepo.GetByEmail(User.Identity.Name).Name + ")";
+        }
+
+
+        [Authorize]
         [Route("AllDoctorServices")]
         [HttpGet]
         public List<ServiceWeb> AllDoctorServices()
@@ -31,14 +40,16 @@ namespace VetClinic.Controllers
             List<ServiceWeb> listWeb = new List<ServiceWeb>();
              
             List<Service> list = ServiceRepo.GetAllDoctorServices(UserRepo.GetByEmail(User.Identity.Name).UserId.ToString());
-                        
+
+            list = list.Where(x => DateTime.Parse(x.DateTimeService) > DateTime.Now).ToList();
             foreach (var i in list)
             {
                 Pet p = PetRepo.GetElementsById(i.IDPet.ToString());
                 listWeb.Add(new ServiceWeb
                 {
                     ServiceId = i.ServiceId,
-                    DateTimeService = i.DateTimeService,
+                    Date = DateTime.Parse(i.DateTimeService).ToString("dd.MM.yyyy"),
+                    Time = DateTime.Parse(i.DateTimeService).ToString("HH:mm"),
                     DoctorName = UserRepo.GetElementsById(i.DoctorId.ToString()).Name,
                     PetName = p.Name,
                     OwnerName = p.OwnerName
@@ -79,9 +90,7 @@ namespace VetClinic.Controllers
         [HttpGet]
         public List<ServiceType> GetServiceTypes()
         {
-
             return ServiceRepo.GetServiceTypes();
-
         }
 
         [Authorize]
@@ -119,6 +128,7 @@ namespace VetClinic.Controllers
         {
 
             Service temp = ServiceRepo.GetElementsById(service.ServiceId.ToString());
+            temp.ServiceTypeId = service.ServiceTypeId;
             temp.Treatment = service.Treatment;
             temp.Diagnosis = service.Diagnosis;
             temp.Anamnesis = service.Anamnesis;
@@ -130,9 +140,9 @@ namespace VetClinic.Controllers
         [Authorize]
         [Route("GetPet")]
         [HttpGet]
-        public void GetPet(string id)
+        public Pet GetPet(string id)
         {
-            PetRepo.GetElementsById(id);
+            return PetRepo.GetElementsById(id);
         }
 
 

@@ -14,7 +14,7 @@ namespace DataModel
         public string Name { get; set; }
         public string Patronymic { get; set; }
         public string Surname { get; set; }
-        public DateTime Birth { get; set; }
+        public string Birth { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Note { get; set; }

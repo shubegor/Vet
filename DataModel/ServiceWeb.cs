@@ -16,8 +16,9 @@ namespace DataModel
         public string OwnerName { get; set; }
 
         public string PetName { get; set; }
-        public DateTime DateTimeService { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
 
-        
+
     }
 }

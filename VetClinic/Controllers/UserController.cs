@@ -46,7 +46,14 @@ namespace VetClinic.Controllers
         {
             PetRepo.UpdateElements(pet);
         }
-
+        [Route("NewPet")]
+        [HttpPost]
+        public void NewPet(Pet pet)
+        {
+            pet.OwnerId = UserRepo.GetByEmail(User.Identity.Name).UserId;
+            pet.OwnerName = UserRepo.GetByEmail(User.Identity.Name).Name;
+            PetRepo.AddElements(pet);
+        }
 
 
         [Authorize]

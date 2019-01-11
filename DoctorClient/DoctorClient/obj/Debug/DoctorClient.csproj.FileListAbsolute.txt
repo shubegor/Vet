@@ -1,0 +1,17 @@
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\DoctorClient.exe.config
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\DoctorClient.exe
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\DoctorClient.pdb
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.Auth.resources
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.MainForm.resources
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.PetForm.resources
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.Properties.Resources.resources
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.ServiceForm.resources
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.csproj.GenerateResource.Cache
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.csproj.CoreCompileInputs.cache
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.exe
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.pdb
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.csprojResolveAssemblyReference.cache
+C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\obj\Debug\DoctorClient.VaccineForm.resources

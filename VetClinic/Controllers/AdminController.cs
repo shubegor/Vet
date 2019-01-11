@@ -113,7 +113,8 @@ namespace VetClinic.Controllers
                 Pet p = PetRepo.GetElementsById(i.IDPet.ToString());
                 listWeb.Add(new ServiceWeb {
                     ServiceId = i.ServiceId,
-                    DateTimeService = i.DateTimeService,
+                    Date = DateTime.Parse(i.DateTimeService).ToString("dd.MM.yyyy"),
+                    Time = DateTime.Parse(i.DateTimeService).ToString("HH:mm"),
                     DoctorName = UserRepo.GetElementsById(i.DoctorId.ToString()).Name,
                     PetName = p.Name,
                     OwnerName = p.OwnerName });
@@ -148,7 +149,7 @@ namespace VetClinic.Controllers
 
             Service s = ServiceRepo.GetElementsById(ServiceId);
             s.Phone = phone;
-            s.DateTimeService = time;
+            s.DateTimeService = time.ToString();
             ServiceRepo.UpdateElements(s);
         }
 
@@ -177,11 +178,11 @@ namespace VetClinic.Controllers
             }
             //try
             //{
-                List<Service> sevices = ServiceRepo.GetAllDoctorServices(DoctorId).Where(x => x.DateTimeService.Date == Date.Date).ToList();
+                List<Service> sevices = ServiceRepo.GetAllDoctorServices(DoctorId).Where(x => DateTime.Parse(x.DateTimeService).Date == Date.Date).ToList();
                 
                 foreach (var i in sevices)
                 {
-                    list.Remove(list.FirstOrDefault(x => x.Hour == i.DateTimeService.Hour && x.Minute == i.DateTimeService.Minute));        
+                    list.Remove(list.FirstOrDefault(x => x.Hour == DateTime.Parse(i.DateTimeService).Hour && x.Minute == DateTime.Parse(i.DateTimeService).Minute));        
                 }
             //}
             //catch { }

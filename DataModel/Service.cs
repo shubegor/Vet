@@ -30,7 +30,7 @@ namespace DataModel
         [ForeignKey("ServiceTypeId")]
         public ServiceType ServiceType { get; set; }
 
-        public DateTime DateTimeService { get; set; }
+        public string DateTimeService { get; set; }
 
         public string Anamnesis { get; set; }
 

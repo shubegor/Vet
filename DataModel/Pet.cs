@@ -18,7 +18,7 @@ namespace DataModel
 
         public string Breed { get; set; }
 
-        public DateTime Birth { get; set; }
+        public String Birth { get; set; }
 
         public bool Gender { get; set; }
 

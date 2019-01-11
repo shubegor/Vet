@@ -17,7 +17,7 @@ namespace DataAccess
             {
                 UserId = Guid.NewGuid(),
                 Email = "1",
-                Birth = DateTime.Now,
+                Birth = DateTime.Now.ToString(),
                 Role = 0
             });
         
