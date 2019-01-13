@@ -1,0 +1,96 @@
+﻿<div class="row justify-content-center mt-3">
+    <div class="col col-md-4"> </div>
+        <div class="col col-md-4">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <div class="registerForm" style="">
+                        <div class="form-group" align="center">
+                            <h2 style="margin-bottom:30px; ">Регистрация</h2>
+
+                            <p >
+
+                                <input class="authT type="email" id="email" placeholder="Введите email" />
+                            </p>
+                            <p >
+
+                                <input class="authT type="password" id="password" placeholder="Введите пароль" />
+                            </p >
+                            <p >
+
+                                <input class="authT type="password" id="password1" placeholder="Повторите пароль" />
+                            </p>
+
+                            <input type="submit" id="submit" value="Регистрация" class="btn btn-success"  style="margin-bottom:15px;" /> </br>
+                            <a class="ent" href="Login">Войти в аккаунт</a>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="userInfo" style="display:none;">
+                <p>Вы вошли как: <span class="userName"></span></p>
+            </div>
+        
+
+
+        @section scripts{
+            <script type="text/javascript">
+                $(function () {
+                    $('#submit').click(function (e) {
+                        e.preventDefault();
+                        var user = {
+                            Email: $('#email').val(),
+                            Password: $('#password').val()
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:64332/api/Account/Register',
+                            type: 'POST',
+                            data: JSON.stringify(user),
+                            contentType: "application/json; charset=utf-8",
+
+                            success: function (data) {
+                                alert("Регистрация пройдена");
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                jsonValue = jQuery.parseJSON(xhr.responseText );
+                                
+                                alert(jsonValue.ModelState[""]);
+                                
+                               
+                                
+                            }
+                        });
+                    });
+
+                    var tokenKey = "tokenInfo";
+                    $('#submitLogin').click(function (e) {
+                        e.preventDefault();
+                        var loginData = {
+                            grant_type: 'password',
+                            username: $('#phoneLogin').val(),
+                            password: $('#passwordLogin').val()
+                        };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Token',
+                            data: loginData
+                        }).done(function (data) {
+                            alert("Вход выполнен!");
+                            window.location.href = "http://localhost:11821/Home/Orders";
+                            // сохраняем в хранилище sessionStorage токен доступа
+                            window.localStorage.setItem('tokenKey', data.access_token);
+                        }).fail(function (data) {
+                            alert('При логине возникла ошибка');
+                        });
+                    });
+
+                })
+            </script>
+        }
+    </div>
+    </div>

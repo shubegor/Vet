@@ -1,0 +1,96 @@
+﻿
+
+@{
+    ViewBag.Title = "Pets";
+}
+
+<p><a href="NewPet" class="btn btn-primary btn-lg" style="margin-top:15px;">Создать карточку питомца &raquo;</a></p>
+<h2>Мои питомцы:</h2>
+
+<div id="CardBlock" class=" row">
+
+
+    @*<div id="CardBlock" class=""></div>*@
+
+
+    @*<div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Пряник</h5>
+                <h6 class="card-subtitle mb-2 text-muted">№ карточки 8</h6>
+                <p class="card-text">Вид: Собака</p>
+                <p class="card-text">Порода: Корги</p>
+                <p class="card-text">Возраст: 11.11.2009</p>
+                <p class="card-text">Вес: 2</p>
+                <p class="card-text">Пол: М</p>
+                <p class="card-text">Окрас: Красный</p>
+
+                <a href="History" class="card-link">История болезни</a> </br>
+                <a href="Vaccination" class="card-link">График вакцинации</a>
+            </div>
+        </div>
+    </div>*@
+
+
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllPets();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+        function GetAllPets() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/User/AllUserPets',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        // вывод полученных данных на экран
+        function WriteResponse(Pets) {
+            var strResult = "";
+            $.each(Pets, function (index, pet) {
+                var date = pet.Birth.slice(0, 10);
+                var male;
+                if (pet.Gender == true) {
+                    male = "M";
+                }
+                else {
+                    male = "Ж";
+                }
+                strResult += "<div class=\"col-md-4\"> <div class=\"card\"> <div class=\"card-body\">  <h5 class=\"card-title\">" + pet.Name + " </h5 > <h6 class=\"card-subtitle mb-2 text-muted\">№ карточки " + pet.PetId + "</h6> <p class=\"card-text\">Вид:" + pet.Species + "</p>  <p class=\"card-text\">Порода:" + pet.Breed + "</p>  <p class=\"card-text\">Возраст:" + date + "</p> <p class=\"card-text\">Вес:" + pet.Weight + "</p>  <p class=\"card-text\">Пол:" + male + "</p> <p class=\"card-text\">Окрас:" + pet.Colour + " </p> <a href=\"History?id=" + pet.PetId + " \"class=\"card-link\">История болезни</a> </br> <a href=\"Vaccination?id=" + pet.PetId + " \" class=\"card-link\">График вакцинации</a> </div > </div > </div >";
+            });
+            
+            $("#CardBlock").html(strResult);
+
+        }
+        
+    </script>
+}

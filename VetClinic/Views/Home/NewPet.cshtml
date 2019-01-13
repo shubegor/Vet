@@ -1,0 +1,102 @@
+﻿
+
+@{
+    ViewBag.Title = "NewPet";
+}
+<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddPet">
+                    <div class="form-group" align="center">
+                        <h2>Карточка питомца</h2>
+                        <p>
+                            <input type="text" id="Name" placeholder="Кличка" />
+                        </p>
+                        <p>
+                            <input type="text" id="Species" placeholder="Вид" />
+                        </p>
+                        <p>
+                            <input type="text" id="Breed" placeholder="Порода" />
+                        </p>
+                        <p>
+                            <input style="width:180px;" type="date" id="Birth" placeholder="Дата рождения" />
+                        </p>
+                        <p>
+                            <input type="text" id="Weight" placeholder="Вес" />
+                        </p>
+                        <select style="width:180px; margin: 0 0 10px;" id="male">
+                            <option value=true>Мужской</option>
+                            <option value=false>Женский</option>
+                        
+                        </select>
+                        <p>
+                            <input type="text" id="Colour" placeholder="Окрас" />
+                        </p>
+                        <input type="submit" id="submitOrder" value="Заказать" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+        $(function AddPet() {
+            
+
+            $('#submitOrder').click(function (e) {
+                e.preventDefault();
+                var pet = {
+                    
+                    Name: $('#Name').val(),
+                    Species: $('#Species').val(),
+                    Breed: $('#Breed').val(),
+                    Birth: $('#Birth').val(),
+                    Gender: $('#male').val(),
+                    Weight: $('#Weight').val(),
+                    Colour: $('#Colour').val()
+                };
+
+                $.ajax({
+                    url: 'http://localhost:64332/api/User/NewPet',
+                    type: 'POST',
+                    data: JSON.stringify(pet),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Успешно добавлен");
+                        window.location.href = "http://localhost:64332/Home/Pets";
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+            });
+        })
+    </script>
+}
+

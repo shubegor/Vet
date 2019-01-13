@@ -1,0 +1,20 @@
+﻿"DoctorClient.exe" (CLR v4.0.30319: DefaultDomain). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_32\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DefaultDomain). Загружено "C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\DoctorClient.exe". Символы загружены.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms.resources\v4.0_4.0.0.0_ru_b77a5c561934e089\System.Windows.Forms.resources.dll". Сборка модуля выполнена без символов.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Accessibility\v4.0_4.0.0.0__b03f5f7f11d50a3a\Accessibility.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\SMDiagnostics\v4.0_4.0.0.0__b77a5c561934e089\SMDiagnostics.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel.Internals\v4.0_4.0.0.0__31bf3856ad364e35\System.ServiceModel.Internals.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization.resources\v4.0_4.0.0.0_ru_b77a5c561934e089\System.Runtime.Serialization.resources.dll". Сборка модуля выполнена без символов.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\mscorlib.resources\v4.0_4.0.0.0_ru_b77a5c561934e089\mscorlib.resources.dll". Сборка модуля выполнена без символов.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\Users\Egor\source\repos\VetClinic\DoctorClient\DoctorClient\bin\Debug\Newtonsoft.Json.dll". Символы загружены.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Numerics\v4.0_4.0.0.0__b77a5c561934e089\System.Numerics.dll". Невозможно найти или открыть PDB-файл.
+"DoctorClient.exe" (CLR v4.0.30319: DoctorClient.exe). Загружено "C:\WINDOWS\Microsoft.Net\assembly\GAC_32\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll". Невозможно найти или открыть PDB-файл.
+Программа "[27860] DoctorClient.exe: Трассировка программы" завершилась с кодом 0 (0x0).
+Программа "[27860] DoctorClient.exe" завершилась с кодом 0 (0x0).

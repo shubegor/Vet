@@ -1,0 +1,53 @@
+﻿<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+        <div class="col col-md-4">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <div class="loginForm registerForm">
+                        <div class="form-group" align="center">
+                            <h3>Вход на сайт</h3>
+                            <p>
+                                <input type="email" id="Login" placeholder="example@example.com" />
+                            </p>
+                            <p>
+                                <input type="password" id="passwordLogin" placeholder="Введите пароль" />
+                            </p>
+                            <input type="submit" id="submitLogin" value="Логин" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section scripts{
+        <script type="text/javascript">
+            $(function () {
+                var tokenKey = "tokenInfo";
+                $('#submitLogin').click(function (e) {
+                    e.preventDefault();
+                    var loginData = {
+                        grant_type: 'password',
+                        username: $('#Login').val(),
+                        password: $('#passwordLogin').val()
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Token',
+                        data: loginData
+                    }).done(function (data) {
+                        alert("Вход выполнен!");
+                        window.location.href = "http://localhost:64332/Home/";
+                        // сохраняем в хранилище sessionStorage токен доступа
+                        window.localStorage.setItem('tokenKey', data.access_token);
+                    }).fail(function (data) {
+                        alert('При логине возникла ошибка');
+                    });
+                });
+
+            })
+        </script>
+    }
+

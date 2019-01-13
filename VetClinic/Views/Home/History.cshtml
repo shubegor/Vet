@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>История болезни питомца</h2>
+
+<div id="HistoryBlock" class=" row">
+    @*<div class="card cardH ">
+        <p> Врач: аа</p>
+        <p> Дата: аа</p>
+        <p> Время: аа</p>
+        <p> Услуга: аа</p>
+        <p> Стоимость: аа</p>
+        <p> Анамнез: аа</p>
+        <p> Диагноз: аа</p>
+        <p> Лечение: аа</p>
+
+    </div>*@
+   
+
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllPets();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        function GetAllPets() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/User/GetServicesPet?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+        
+        function WriteResponse(Sers) {
+            var strResult = "";
+
+            if (Sers.length == 0) {
+                strResult += "<h2>Нет данных</h2>";
+            }
+            else {
+                $.each(Sers, function (index, ser) {
+                    var date = ser.DateTimeService.slice(0, 10);
+                    var time = ser.DateTimeService.slice(11, 16);
+
+                    strResult += "<div class=\"card cardH \">    <p> Врач: " + ser.Doctor.Name + "</p>  <p> Дата: " + date + "</p>  <p> Время: " + time + "</p>  <p> Услуга: " + ser.ServiceType.Name + "</p> <p> Стоимость: " + ser.ServiceType.Cost + "</p>  <p> Анамнез: " + ser.Anamnesis + "</p> <p> Диагноз: " + ser.Diagnosis + "</p> <p> Лечение: " + ser.Treatment + "</p> </div>";
+                });
+
+            }
+            
+            $("#HistoryBlock").html(strResult);
+
+        }
+        
+    </script>
+}

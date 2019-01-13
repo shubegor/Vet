@@ -18,12 +18,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Лапы и хвост", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+
+                    @if (User.Identity.Name != "")
+    {
+                <li>@Html.ActionLink("Мои питомцы", "Pets", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Предстоящие записи", "Services", "Home", new { area = "" }, null)</li>
+                <li style="padding-left:200px;">@Html.ActionLink(@User.Identity.Name, "", "", new { area = "" }, null)</li>
+}
+else
+{
+                <li>@Html.ActionLink("Регистрация", "Auth", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Вход", "Login", "Home", new { area = "" }, null)</li>
+}
+
+
+
+
+
+
+
                 </ul>
             </div>
         </div>

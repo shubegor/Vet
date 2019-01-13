@@ -160,6 +160,12 @@ namespace VetClinic.Controllers
             ServiceRepo.DeleteElements(id);
         }
 
+        [Route("GetServiceTypes")]
+        [HttpGet]
+        public List<ServiceType> GetServiceTypes()
+        {
+            return ServiceRepo.GetServiceTypes();
+        }
 
 
 
@@ -170,7 +176,7 @@ namespace VetClinic.Controllers
         {
 
             List<DateTime> list = new List<DateTime>();
-            DateTime temp = new DateTime(2019, 1, 10, 10, 0, 0);
+            DateTime temp = new DateTime(Date.Year, Date.Month, Date.Day, 10, 0, 0);
             for (int i = 0; i < 15; i++)
             {
                 list.Add(temp);

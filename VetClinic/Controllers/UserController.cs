@@ -6,8 +6,11 @@ using DataModel;
 using DataAccess;
 using System.Web.Http;
 
+
 namespace VetClinic.Controllers
 {
+
+
     [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
@@ -15,12 +18,24 @@ namespace VetClinic.Controllers
         private IUserRepository UserRepo;
         private IServiceRepository ServiceRepo;
         private IVactinationRepository VactinationRepo;
+
+        public object ViewBag { get; private set; }
+
         public UserController(IPetRepository repo1, IUserRepository repo2, IServiceRepository repo3, IVactinationRepository repo4)
         {
             PetRepo = repo1;
             UserRepo = repo2;
             ServiceRepo = repo3;
             VactinationRepo = repo4;
+        }
+
+
+        [Authorize]
+        [Route("GetDoctors")]
+        [HttpGet]
+        public List<User> GetDoctors()
+        {
+            return UserRepo.GetDoctorsList();
         }
 
         [Authorize]
@@ -35,9 +50,9 @@ namespace VetClinic.Controllers
         [Authorize]
         [Route("GetPet")]
         [HttpGet]
-        public void GetPet(string id)
+        public Pet GetPet(string id)
         {
-            PetRepo.GetElementsById(id);
+            return PetRepo.GetElementsById(id);
         }
 
         [Route("EditPet")]
@@ -67,6 +82,7 @@ namespace VetClinic.Controllers
                 i.Doctor = UserRepo.GetElementsById(i.DoctorId.ToString());
                 i.ServiceType = ServiceRepo.GetServiceTypes().FirstOrDefault(x => x.ServiceTypeId == i.ServiceTypeId);
             }
+            temp = temp.OrderByDescending(x => DateTime.Parse(x.DateTimeService)).ToList();
 
             return temp;
         }
@@ -75,7 +91,15 @@ namespace VetClinic.Controllers
         [HttpGet]
         public List<Service> AllClientServices()
         {
-            return ServiceRepo.GetAllUserServices(UserRepo.GetByEmail(User.Identity.Name).UserId.ToString()).ToList();
+            List<Service> temp = ServiceRepo.GetAllUserServices(UserRepo.GetByEmail(User.Identity.Name).UserId.ToString()).Where(x=>DateTime.Parse(x.DateTimeService) > DateTime.Now).ToList();
+            foreach (var i in temp)
+            {
+                i.Doctor = UserRepo.GetElementsById(i.DoctorId.ToString());
+                i.ServiceType = ServiceRepo.GetServiceTypes().FirstOrDefault(x => x.ServiceTypeId == i.ServiceTypeId);
+                i.Pet = PetRepo.GetElementsById(i.IDPet.ToString());
+
+            }
+            return temp;
         }
 
 

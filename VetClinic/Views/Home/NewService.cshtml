@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "NewService";
+}
+
+<h2>NewService</h2>
+
+<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddSer">
+                    <div class="form-group" align="center">
+                        <h2>Запись на прием</h2>
+
+                        <select style="width:180px; margin: 0 0 10px;" id="doctor"></select>
+
+                        <select style="width:180px; margin: 0 0 10px;" id="types"></select>
+                       
+
+                        <p>
+                            <input style="width:180px;" type="date" id="date" placeholder="Дата" />
+                        </p>
+
+
+                        <select style="width:180px; margin: 0 0 10px;" id="time"></select>
+
+                        <select style="width:180px; margin: 0 0 10px;" id="pet"></select>
+
+                        <p>
+                            <input type="text" id="phone" placeholder="№ телефона для связи" />
+                        </p>
+                        <input type="submit" id="submitOrder" value="Заказать" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            //$('#date').val(new Date($.now()).format('yyyy-MM-dd')); 
+            LoadDoctors();
+            LoadPets();
+            LoadServiceTypes();
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+        function LoadServiceTypes() {
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetServiceTypes',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data, "types");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function LoadDoctors() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/User/GetDoctors',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data, "doctor");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function LoadPets() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/User/AllUserPets',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data, "pet");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        
+        $('#date').change(function (e) {
+
+            if ($('#doctor').val() != 0) {
+                UpdateTimeReq();
+            };
+
+
+        });
+
+        function UpdateTimeReq() {
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetFreeTime?DoctorId=' + ($('#doctor').val() + "&Date=" + $('#date').val()),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data, "time");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+
+        }
+
+       
+        function WriteResponse(item, listname) {
+            var strResult = "";
+            if (listname == "doctor") {
+                strResult = "<option value=0>Врач</option>";
+                $.each(item, function (index, doc) {
+
+
+                    strResult += "<option value=" + doc.UserId + ">" + doc.Name + "</option>";
+                });
+            }
+            if (listname == "pet") {
+                strResult = "<option value=0>Питомец</option>";
+                $.each(item, function (index, doc) {
+
+
+                    strResult += "<option value=" + doc.PetId + ">" + doc.Name + "</option>";
+                });
+            }
+            if (listname == "time") {
+                strResult = "<option value=0>Время</option>";
+                $.each(item, function (index, doc) {
+
+
+                    strResult += "<option value=" + doc + ">" + doc.slice(11, 16); + "</option>";
+                });
+
+            }
+            
+            if (listname == "types") {
+                strResult = "<option value=0>Услуга</option>";
+                $.each(item, function (index, doc) {
+
+
+                    strResult += "<option value=" + doc.ServiceTypeId + ">" + doc.Name + "</option>";
+                });
+            }
+
+
+            $("#" + listname + "").html(strResult);
+
+        }
+
+
+        $(function AddSer() {
+
+
+            $('#submitOrder').click(function (e) {
+                e.preventDefault();
+                //console.log($('#doctor').val());
+                if ($('#doctor').val() == 0) {
+                    alert("Выберите докотора!"); return;
+                }
+                if ($('#pet').val() == 0) {
+                    alert("Выберите питомца!"); return;
+                }
+                if ($('#time').val() == 0) {
+                    alert("Выберите время!"); return;
+                }
+                if ($('#types').val() == 0) {
+                    alert("Выберите услугу!"); return;
+                }
+                var ser = {
+
+                    DoctorId: $('#doctor').val(),
+                    IDPet: $('#pet').val(),
+                    DateTimeService: $('#time').val(),
+                    Phone: $('#phone').val(),
+                    ServiceTypeId: $('#types').val()
+                };
+
+                $.ajax({
+                    url: 'http://localhost:64332/api/User/NewService',
+                    type: 'POST',
+                    data: JSON.stringify(ser),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Успешно добавлен");
+                        window.location.href = "http://localhost:64332/Home/Services";
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+            });
+        })
+    </script>
+}
+
