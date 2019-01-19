@@ -24,6 +24,7 @@ namespace VetClinic.Controllers
 
         //-----------------------------------------------Users
         
+
         [Route("AllClients")]
         [HttpGet]
         public List<User> AllClients()
@@ -86,9 +87,9 @@ namespace VetClinic.Controllers
         }
         [Route("GetPet")]
         [HttpGet]
-        public void GetPet(string id)
+        public Pet GetPet(string id)
         {
-            PetRepo.GetElementsById(id);
+            return PetRepo.GetElementsById(id);
         }
 
 
@@ -99,27 +100,31 @@ namespace VetClinic.Controllers
         [HttpGet]
         public List<Service> AllClientServices(string id)
         {
-            return ServiceRepo.GetAllUserServices(id);
+            List<Service> temp = ServiceRepo.GetAllUserServices(id);
+            foreach (var i in temp)
+            {
+                i.Doctor = UserRepo.GetElementsById(i.DoctorId.ToString());
+                i.ServiceType = ServiceRepo.GetServiceTypes().FirstOrDefault(x => x.ServiceTypeId == i.ServiceTypeId);
+                i.Pet = PetRepo.GetElementsById(i.IDPet.ToString());
+
+            }
+            return temp;
         }
 
         [Route("AllServices")]
         [HttpGet]
-        public List<ServiceWeb> AllServices()
+        public List<Service> AllServices()
         {
-            List<Service> list = ServiceRepo.GetAllListOfElements();
-            List<ServiceWeb> listWeb = new List<ServiceWeb>();
-            foreach(var i in list)
+            List<Service> temp = ServiceRepo.GetAllListOfElements();
+            foreach (var i in temp)
             {
-                Pet p = PetRepo.GetElementsById(i.IDPet.ToString());
-                listWeb.Add(new ServiceWeb {
-                    ServiceId = i.ServiceId,
-                    Date = DateTime.Parse(i.DateTimeService).ToString("dd.MM.yyyy"),
-                    Time = DateTime.Parse(i.DateTimeService).ToString("HH:mm"),
-                    DoctorName = UserRepo.GetElementsById(i.DoctorId.ToString()).Name,
-                    PetName = p.Name,
-                    OwnerName = p.OwnerName });
+                i.Doctor = UserRepo.GetElementsById(i.DoctorId.ToString());
+                i.ServiceType = ServiceRepo.GetServiceTypes().FirstOrDefault(x => x.ServiceTypeId == i.ServiceTypeId);
+                i.Pet = PetRepo.GetElementsById(i.IDPet.ToString());
+
             }
-            return listWeb;
+            temp = temp.OrderByDescending(x => DateTime.Parse(x.DateTimeService)).ToList();
+            return temp;
         }
 
         [Route("GetService")]
@@ -137,6 +142,7 @@ namespace VetClinic.Controllers
         {
 
             service.ServiceId = Guid.NewGuid();
+           
 
             ServiceRepo.AddElements(service);
 
@@ -149,7 +155,16 @@ namespace VetClinic.Controllers
 
             Service s = ServiceRepo.GetElementsById(ServiceId);
             s.Phone = phone;
-            s.DateTimeService = time.ToString();
+            s.DateTimeService = time.ToString("yyyy-MM-ddTHH:mm");
+            ServiceRepo.UpdateElements(s);
+        }
+
+        [Route("ChangePay")]
+        [HttpGet]
+        public void ChangePay(string ServiceId, bool IsPaid)
+        {
+            Service s = ServiceRepo.GetElementsById(ServiceId);
+            s.IsPaid = IsPaid;
             ServiceRepo.UpdateElements(s);
         }
 

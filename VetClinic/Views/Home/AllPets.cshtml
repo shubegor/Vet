@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "AllPets";
+}
+
+<h2>Пациенты клиники</h2>
+
+<div id="tableBlock" class="mt-2"></div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllPets();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+
+        function GetAllPets() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/AllPet',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function WriteResponse(pets) {
+            var strResult = "<table class='table table-striped table-bordered'><thead class='thead-dark' align='center'><th>Владелец</th><th>Вид</th><th>Порода</th><th>Пол</th><th>Дата рождения</th><th>Управление</th></thead>";
+            $.each(pets, function (index, pet) {
+                var date = pet.Birth.slice(0, 10);
+                var male = "М"
+                if(pet.Gender == false) male = "Ж"
+                var button = "<a href=\"NewServiceAdmin?id=" + pet.PetId + "\" style=\"margin-right: 10px; \"class=\"btn btn-primary\" >Запись на прием</a>";
+                button += "<a href=\"EditPet?id=" + pet.PetId + "\" class=\"btn btn-primary\">Редактировать </a>";
+
+                strResult += "<tr align='center'><td>" + pet.OwnerName + "</td><td> " + pet.Species + "</td> <td> " + pet.Breed + "</td> <td> " + male + "</td><td> " + date + "</td><td> " + button + "</td></tr>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+
+
+
+
+    </script>
+}

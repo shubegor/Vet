@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "EditService";
+}
+
+<h2>EditService</h2>
+
+<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddSer">
+                    <div class="form-group" align="center">
+                        <h2>Редактирование записи</h2>
+
+
+                        <p>
+                            <input style="width:180px;" type="date" id="date" placeholder="Дата" />
+                        </p>
+
+                        <select style="width:180px; margin: 0 0 10px;" id="time"></select>
+                        <p>
+                            <input type="text" id="phone" placeholder="Телефон" />
+                        </p>
+                        
+
+                        <input type="submit" id="submitOrder" value="Сохранить" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            //$('#date').val(new Date($.now()).format('yyyy-MM-dd'));
+            LoadData();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        function UpdateTimeReq(docID) {
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetFreeTime?DoctorId=' + docID + "&Date=" + $('#date').val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data, "time");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+
+        }
+
+
+            function WriteResponse(item) {
+               
+                var strResult = "";
+                $.each(item, function (index, doc) {
+
+                strResult += "<option value=" + doc + ">" + doc.slice(11, 16); + "</option>";
+                });
+
+                
+                $("#time").html(strResult);
+
+            }
+        function LoadData() {
+            
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetService?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('#date').val(data.DateTimeService.slice(0, 10));
+                    UpdateTimeReq(data.DoctorId);
+                    window.localStorage.setItem('doc', data.DoctorId);
+                    $('#phone').val(data.Phone);
+
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+
+        $('#date').change(function (e) {
+            UpdateTimeReq(window.localStorage.getItem('doc'));
+        });
+
+        $(function AddSer() {
+
+
+            $('#submitOrder').click(function (e) {
+                e.preventDefault();
+                //console.log($('#doctor').val());
+
+                
+                $.ajax({
+                    url: 'http://localhost:64332/api/Admin/EditService?ServiceId=' + getUrlParameter('id') + "&time=" + $('#time').val() + "&phone=" + $('#phone').val()  ,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("Данные обновлены");
+                        window.location.href = "http://localhost:64332/Home/AllServices";
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+            });
+        })
+    </script>
+}

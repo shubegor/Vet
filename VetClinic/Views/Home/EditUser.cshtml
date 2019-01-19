@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "EditUser";
+}
+
+
+<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddSer">
+                    <div class="form-group" align="center">
+                        <h2>Редактирование карточки пользователя</h2>
+
+
+                        <p>
+                            <input type="text" id="name" placeholder="Имя" />
+                        </p>
+
+                        <p>
+                            <input type="text" id="phone" placeholder="Телефон" />
+                        </p>
+
+                        
+                        <p>
+                            <input type="text" id="address" placeholder="Адрес" />
+                        </p>
+                        <p>
+                            <input type="text" id="note" placeholder="Особые отметки" />
+                        </p>
+
+                        <input type="submit" id="submitOrder" value="Сохранить" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            //$('#date').val(new Date($.now()).format('yyyy-MM-dd'));
+            LoadData();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+
+        function LoadData() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetClientById?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    
+                    $('#name').val(data.Name);
+                    $('#phone').val(data.PhoneNumber);
+                    
+                    $('#address').val(data.Address);
+                    $('#note').val(data.Note);
+
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+
+
+
+        $(function AddSer() {
+
+
+            $('#submitOrder').click(function (e) {
+                e.preventDefault();
+                //console.log($('#doctor').val());
+
+                var user = {
+
+
+                    UserId: getUrlParameter('id'),
+                    Name: $('#name').val(),
+                    PhoneNumber: $('#phone').val(),
+                    
+                    Address: $('#address').val(),
+                    Note: $('#note').val()
+                   
+                };
+
+                $.ajax({
+                    url: 'http://localhost:64332/api/Admin/EditClient',
+                    type: 'POST',
+                    data: JSON.stringify(user),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Успешно обновлен");
+                        window.location.href = "http://localhost:64332/Home/AllUsers";
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+            });
+        })
+    </script>
+}

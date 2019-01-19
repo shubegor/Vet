@@ -73,7 +73,7 @@ namespace DoctorClient
                 return;
             }
 
-            UserModel u = new UserModel() { Email = email, Password = p1 };
+            UserModel u = new UserModel() { Email = email, Password = p1, Role = 1 };
 
             string site = "http://localhost:64332/";
             try

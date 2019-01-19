@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "EditPet";
+}
+
+<h2>EditPet</h2>
+
+<div class="row justify-content-center mt-3">
+
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddSer">
+                    <div class="form-group" align="center">
+                        <h2>Редактирование карточки питомца</h2>
+
+                        <p>
+                            <input type="text" id="species" placeholder="Вид" />
+                        </p>
+                        <p>
+                            <input type="text" id="breed" placeholder="Порода" />
+                        </p>
+                        <p>
+                            <input type="text" id="name" placeholder="Имя" />
+                        </p>
+                        <p>
+                            <input style="width:180px;" type="date" id="date" placeholder="Дата" />
+                        </p>
+
+                        <p>
+                            <input type="text" id="weight" placeholder="Вес" />
+                        </p>
+                        <p>
+                            <input type="text" id="color" placeholder="Цвет" />
+                        </p>
+
+                        <input type="submit" id="submitOrder" value="Сохранить" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            //$('#date').val(new Date($.now()).format('yyyy-MM-dd'));
+            LoadData();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        
+
+        function LoadData() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/GetPet?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('#species').val(data.Species);
+                    $('#breed').val(data.Breed);
+                    $('#name').val(data.Name);
+                    $('#date').val(data.Birth);
+                    $('#weight').val(data.Weight);
+                    $('#color').val(data.Colour);
+
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        
+
+
+        $(function AddSer() {
+
+
+            $('#submitOrder').click(function (e) {
+                e.preventDefault();
+                //console.log($('#doctor').val());
+               
+                var pet = {
+
+                    
+                    PetId: getUrlParameter('id'),
+                    Species: $('#species').val(),
+                    Breed: $('#breed').val(),
+                    Name: $('#name').val(),
+                    Birth: $('#date').val(),
+                    Weight: $('#weight').val(),
+                    Colour: $('#color').val()
+                };
+
+                $.ajax({
+                    url: 'http://localhost:64332/api/Admin/EditPet',
+                    type: 'POST',
+                    data: JSON.stringify(pet),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Успешно обновлен");
+                        window.location.href = "http://localhost:64332/Home/AllPets";
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+            });
+        })
+    </script>
+}

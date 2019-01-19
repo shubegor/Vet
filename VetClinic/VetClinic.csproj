@@ -278,6 +278,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AppDbInitializer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -382,12 +383,18 @@
     <Content Include="Views\Home\Vaccination.cshtml" />
     <Content Include="Views\Home\Services.cshtml" />
     <Content Include="Views\Home\NewService.cshtml" />
+    <Content Include="Views\Home\AllUsers.cshtml" />
+    <Content Include="Views\Home\AllPets.cshtml" />
+    <Content Include="Views\Home\NewServiceAdmin.cshtml" />
+    <Content Include="Views\Home\EditPet.cshtml" />
+    <Content Include="Views\Home\EditUser.cshtml" />
+    <Content Include="Views\Home\UserServices.cshtml" />
+    <Content Include="Views\Home\AllServices.cshtml" />
+    <Content Include="Views\Home\EditService.cshtml" />
+    <Content Include="Views\Home\DeleteService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Doctor\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

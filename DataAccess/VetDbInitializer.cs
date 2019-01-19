@@ -12,15 +12,12 @@ namespace DataAccess
     {
         protected override void Seed(VetContext db)
         {
-
-            db.Users.Add(new User
-            {
-                UserId = Guid.NewGuid(),
-                Email = "1",
-                Birth = DateTime.Now.ToString(),
-                Role = 0
-            });
-        
+            string password = "PZBN3ai@";
+            var admin = new User { Email = "admin@ya.ru", Password = password, Role = 0 };
+            
+            db.Users.Add(admin);
+            
+            db.SaveChanges();
             base.Seed(db);
         }
     }

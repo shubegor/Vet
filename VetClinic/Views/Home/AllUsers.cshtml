@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "AllUsers";
+}
+
+<h2>Клиенты клиники</h2>
+
+<div id="tableBlock" class="mt-2"></div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllUsers();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+
+        function GetAllUsers() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/AllClients',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function WriteResponse(users) {
+            var strResult = "<table class='table table-striped table-bordered'><thead class='thead-dark' align='center'><th>Клиент</th><th>Телефон</th><th>E-mail</th><th>Адрес</th><th>Заметка</th><th>Управление</th></thead>";
+            $.each(users, function (index, user) {
+                
+                var button = "<a href=\"EditUser?id=" + user.UserId + "\" style=\"margin-right: 10px; \"class=\"btn btn-primary\" >Редактировать</a>";
+                button += "<a href=\"UserServices?id=" + user.UserId + "\" style=\"margin-right: 10px; \"class=\"btn btn-primary\" >Услуги</a>";
+                strResult += "<tr align='center'><td>" + user.Name + "</td><td> " + user.PhoneNumber + "</td> <td> " + user.Email + "</td><td> " + user.Address + "</td><td> " + user.Note + "</td><td> " + button + "</td></tr>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+
+
+
+
+    </script>
+}

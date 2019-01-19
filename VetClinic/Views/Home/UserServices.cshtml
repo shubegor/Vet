@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "UserServices";
+}
+
+<h2>Услуги клиента</h2>
+
+
+<div id="tableBlock" class="mt-2"></div>
+<p><a  class="btn btn-primary btn-lg" onclick="updatePay()" style="margin-top:15px;">Сохранить</a></p>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllServices();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+        function GetAllServices() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/AllClientServices?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function WriteResponse(services) {
+            var strResult = "<table id = \"myTable\" class='table table-striped table-bordered'><thead class='thead-dark' align='center'><th>Врач</th><th>Услуга</th><th>Питомец</th><th>Дата</th><th>Время</th><th>Стоимость</th><th>Отметка</th></thead>";
+            $.each(services, function (index, ser) {
+                var date = ser.DateTimeService.slice(0, 10);
+                var time = ser.DateTimeService.slice(11, 16);
+                var paid = " <input type=\"checkbox\" id=\"ispaid" + ser.ServiceId + "\" />"
+                if (ser.IsPaid == true) paid = " <input type=\"checkbox\" id=\"ispaid" + ser.ServiceId + "\" checked />"
+                strResult += "<tr id=\"" + ser.ServiceId + "\" align='center'><td>" + ser.Doctor.Name + "</td><td> " + ser.ServiceType.Name + "</td> <td> " + ser.Pet.Name + "</td> <td> " + date + "</td><td> " + time + "</td><td> " + ser.ServiceType.Cost + "</td> <td> " + paid + "</td></tr>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+
+        function updatePay() {
+            
+            var x = document.getElementById("myTable");
+            for (var i = 1; i < x.rows.length; i++) {
+                var curid = x.rows[i].id;
+                var isp = document.getElementById("ispaid" + x.rows[i].id).checked;
+
+                $.ajax({
+                    url: 'http://localhost:64332/api/Admin/ChangePay?ServiceId=' + curid + "&IsPaid=" + isp ,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        console.log("Данные обновлены");
+                        
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    },
+                    beforeSend: function (xhr) {
+                        var token = window.localStorage.getItem('tokenKey');
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
+                });
+
+            }
+            alert("Все изменения сохранены");
+        }
+
+
+
+    </script>
+}
+

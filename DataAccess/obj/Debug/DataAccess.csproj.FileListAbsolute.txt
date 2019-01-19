@@ -12,3 +12,11 @@ C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.xml
 C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.dll
 C:\Users\Egor\source\repos\VetClinic\DataAccess\obj\Debug\DataAccess.pdb
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Web.Http.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Web.Http.WebHost.dll
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Web.Http.xml
+C:\Users\Egor\source\repos\VetClinic\DataAccess\bin\Debug\System.Web.Http.WebHost.xml

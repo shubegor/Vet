@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "DeleteService";
+}
+
+<h2>Удаление записи</h2>
+
+Вы уверены, что хотите удалить запись?
+<a style="margin-right: 10px;" class="btn btn-primary btn-danger" onclick="del()">Да</a>
+<a href="/Home/AllServices" style="margin-right: 10px; " class="btn btn-primary">Вернуться</a>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+        function del() {
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/DeleteService?id=' + getUrlParameter('id'),
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    window.location.href = "http://localhost:64332/Home/AllServices";
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+</script>
+
+    }

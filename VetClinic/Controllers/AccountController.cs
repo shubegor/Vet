@@ -69,6 +69,7 @@ namespace VetClinic.Controllers
 
         // POST api/Account/Logout
         [Route("Logout")]
+        
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -339,8 +340,8 @@ namespace VetClinic.Controllers
             }
             using (var db = new VetContext())
             {
-                model.UserId = Guid.NewGuid();           
-                model.Role = 2; //Указываем стандартную роль при регистрации 
+                model.UserId = Guid.NewGuid();
+                if (model.Role == 0)  model.Role = 2; //Указываем стандартную роль при регистрации 
                 db.Users.Add(model);//Добавляем модель юзера в собственную бд
                 db.SaveChanges();
             }

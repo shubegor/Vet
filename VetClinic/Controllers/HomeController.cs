@@ -26,6 +26,21 @@ namespace VetClinic.Controllers
             ViewBag.Title = "Login Page";
             return View();
         }
+        public ActionResult AllPets()
+        {
+            ViewBag.Title = "Pets Page";
+            return View();
+        }
+        public ActionResult AllUsers()
+        {
+            ViewBag.Title = "Users Page";
+            return View();
+        }
+        public ActionResult AllServices()
+        {
+            ViewBag.Title = "Services Page";
+            return View();
+        }
         public ActionResult Pets()
         {
             ViewBag.Title = "Pets Page";
@@ -58,6 +73,35 @@ namespace VetClinic.Controllers
             ViewBag.Title = "New Service Page";
             return View();
         }
-
+        public ActionResult NewServiceAdmin()
+        {
+            ViewBag.Title = "New Service Page";
+            return View();
+        }
+        public ActionResult EditPet()
+        {
+            ViewBag.Title = "Edit pet Page";
+            return View();
+        }
+        public ActionResult EditUser()
+        {
+            ViewBag.Title = "Edit user Page";
+            return View();
+        }
+        public ActionResult UserServices()
+        {
+            ViewBag.Title = "User service Page";
+            return View();
+        }
+        public ActionResult EditService()
+        {
+            ViewBag.Title = "Edit service Page";
+            return View();
+        }
+        public ActionResult DeleteService()
+        {
+            ViewBag.Title = "Delete service Page";
+            return View();
+        }
     }
 }

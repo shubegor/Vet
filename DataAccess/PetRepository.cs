@@ -47,7 +47,7 @@ namespace DataAccess
             pet.Name = _pet.Name;
             pet.Species = _pet.Species;
             pet.Weight = _pet.Weight;
-            pet.Gender = _pet.Gender;
+            
             pet.Colour = _pet.Colour;
             pet.Breed = _pet.Breed;
             pet.Birth = _pet.Birth;

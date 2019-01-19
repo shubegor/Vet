@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "AllServices";
+}
+
+<h2>Записи на прием</h2>
+
+<div id="tableBlock" class="mt-2"></div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CheckToken();
+            GetAllPets();
+
+        });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:64332'>Главная</a></li>";
+                window.location.href = "http://localhost:64332";
+            }
+        }
+
+
+        function GetAllPets() {
+
+            $.ajax({
+                url: 'http://localhost:64332/api/Admin/AllServices',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        function WriteResponse(services) {
+            var strResult = "<table class='table table-striped table-bordered'><thead class='thead-dark' align='center'><th>Врач</th><th>Услуга</th><th>Питомец</th><th>Дата</th><th>Время</th><th>Клиент</th><th>Управление</th></thead>";
+            $.each(services, function (index, ser) {
+                var date = ser.DateTimeService.slice(0, 10);
+                var time = ser.DateTimeService.slice(11, 16);
+                var button = "<a href=\"EditService?id=" + ser.ServiceId + "\" style=\"margin-right: 10px; \"class=\"btn btn-primary\" >Редактировать</a>";
+                button += "<a href=\"DeleteService?id=" + ser.ServiceId + "\" style=\"margin-right: 10px; \"class=\"btn btn-primary\" >Удалить</a>";
+
+                strResult += "<tr align='center'><td>" + ser.Doctor.Name + "</td><td> " + ser.ServiceType.Name + "</td> <td> " + ser.Pet.Name + "</td> <td> " + date + "</td><td> " + time + "</td><td> " + ser.Pet.OwnerName + "</td><td> " + button + "</td></tr>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+
+
+
+
+    </script>
+}

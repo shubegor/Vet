@@ -21,27 +21,68 @@
                 @Html.ActionLink("Лапы и хвост", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
 
-                    @if (User.Identity.Name != "")
+
+
+                @if (User.IsInRole("admin"))
     {
-                <li>@Html.ActionLink("Мои питомцы", "Pets", "Home", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("Предстоящие записи", "Services", "Home", new { area = "" }, null)</li>
-                <li style="padding-left:200px;">@Html.ActionLink(@User.Identity.Name, "", "", new { area = "" }, null)</li>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Пациенты", "AllPets", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Клиенты", "AllUsers", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Записи на прием", "AllServices", "Home", new { area = "" }, null)</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">  @User.Identity.Name</li >
+                <li>  <a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Сменить пользователя</a></li>
+            </ul>
+
 }
 else
 {
-                <li>@Html.ActionLink("Регистрация", "Auth", "Home", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("Вход", "Login", "Home", new { area = "" }, null)</li>
+
+if (User.Identity.Name != "")
+{
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Мои питомцы", "Pets", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Предстоящие записи", "Services", "Home", new { area = "" }, null)</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">  @User.Identity.Name</li>
+                <li>  <a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Сменить пользователя</a></li>
+            </ul>
+}
+else
+{
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Home/Auth"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
+                <li><a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
+            </ul>
+
+}
+}
+
+
+
+                @*@if (User.IsInRole("admin"))
+    {
+
+    }
+    else
+    {
+        if (User.Identity.Name != "")
+        {
+            <span class="navbar-text navbar-right">
+                @User.Identity.Name
+            </span>*@
+}
 }
 
 
 
 
 
-
-
-                </ul>
             </div>
         </div>
     </div>
