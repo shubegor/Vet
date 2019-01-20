@@ -26,6 +26,7 @@ namespace VetClinic.Controllers
             ViewBag.Title = "Login Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult AllPets()
         {
             ViewBag.Title = "Pets Page";
@@ -36,6 +37,7 @@ namespace VetClinic.Controllers
             ViewBag.Title = "Users Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult AllServices()
         {
             ViewBag.Title = "Services Page";
@@ -73,31 +75,37 @@ namespace VetClinic.Controllers
             ViewBag.Title = "New Service Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult NewServiceAdmin()
         {
             ViewBag.Title = "New Service Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult EditPet()
         {
             ViewBag.Title = "Edit pet Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult EditUser()
         {
             ViewBag.Title = "Edit user Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult UserServices()
         {
             ViewBag.Title = "User service Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult EditService()
         {
             ViewBag.Title = "Edit service Page";
             return View();
         }
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteService()
         {
             ViewBag.Title = "Delete service Page";

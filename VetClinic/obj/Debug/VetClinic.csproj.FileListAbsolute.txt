@@ -127,3 +127,6 @@ C:\Users\Egor\source\repos\VetClinic\VetClinic\bin\Unity.ServiceLocation.pdb
 C:\Users\Egor\source\repos\VetClinic\VetClinic\obj\Debug\VetClinic.Migrations.InitialCreate.resources
 C:\Users\Egor\source\repos\VetClinic\VetClinic\obj\Debug\VetClinic.csproj.GenerateResource.Cache
 C:\Users\Egor\source\repos\VetClinic\VetClinic\obj\Debug\VetClinic.Migrations.MigrateDB.resources
+C:\Users\Egor\source\repos\VetClinic\VetClinic\bin\Quartz.dll
+C:\Users\Egor\source\repos\VetClinic\VetClinic\bin\Quartz.pdb
+C:\Users\Egor\source\repos\VetClinic\VetClinic\bin\Quartz.xml

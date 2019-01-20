@@ -8,7 +8,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using VetClinic.Jobs;
 using VetClinic.Models;
+using VetClinic.Jobs;
 
 namespace VetClinic
 {
@@ -23,6 +25,8 @@ namespace VetClinic
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            EmailScheduler.Start();
         }
     }
 }

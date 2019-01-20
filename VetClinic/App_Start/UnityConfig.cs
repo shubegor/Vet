@@ -50,6 +50,7 @@ namespace VetClinic
             container.RegisterType<DataModel.IServiceRepository, ServiceRepository>();
             container.RegisterType<DataModel.IUserRepository, UserRepository>();
             container.RegisterType<DataModel.IVactinationRepository, VactinationRepository>();
+            container.RegisterType<DataModel.IEmailRepository, EmailRepository>();
             container.RegisterType<AccountController>(new InjectionConstructor());
         }
     }

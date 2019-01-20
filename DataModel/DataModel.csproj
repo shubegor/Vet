@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEmailRepository.cs" />
     <Compile Include="IPetRepository.cs" />
     <Compile Include="IServiceRepository.cs" />
     <Compile Include="IUserRepository.cs" />
